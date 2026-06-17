@@ -1,0 +1,292 @@
+"""
+Rule tables — gender-aware outfit suggestions + colour/tip tables.
+"""
+from __future__ import annotations
+
+UNDERTONE_COLOR_MAP: dict[str, dict[str, list[str]]] = {
+    "Warm": {
+        "Casual":  ["Terracotta","Warm Beige","Olive Green","Mustard","Rust","Peach"],
+        "Formal":  ["Camel","Warm Brown","Ivory","Burgundy","Forest Green","Gold"],
+        "Party":   ["Coral","Burnt Orange","Champagne Gold","Warm Red","Bronze"],
+    },
+    "Cool": {
+        "Casual":  ["Lavender","Sky Blue","Cool Gray","Soft Pink","Mint","Powder Blue"],
+        "Formal":  ["Navy","Charcoal","Plum","Ice Blue","Silver Gray","Blush"],
+        "Party":   ["Electric Blue","Fuchsia","Silver","Deep Purple","Emerald","Cobalt"],
+    },
+    "Neutral": {
+        "Casual":  ["White","Beige","Sage Green","Denim Blue","Soft Gray","Taupe"],
+        "Formal":  ["Classic Black","Crisp White","Slate Blue","Warm Gray","Nude","Deep Teal"],
+        "Party":   ["Jewel Tones","Wine","Rose Gold","Midnight Blue","Champagne"],
+    },
+}
+
+GENDER_OUTFIT_MAP: dict[str, dict[str, dict[str, list[str]]]] = {
+    "Male": {
+        "Oval": {
+            "Casual": [
+                "White slim-fit crew-neck tee with dark indigo slim jeans",
+                "Navy blue polo shirt with stone chinos and white sneakers",
+                "Olive green bomber jacket over grey marl tee + black slim trousers",
+                "Light-wash denim overshirt with rolled sleeves over black tee",
+            ],
+            "Formal": [
+                "Charcoal slim-fit suit with crisp white dress shirt + silver tie",
+                "Navy pinstripe blazer with light grey trousers + white pocket square",
+                "Burgundy mandarin-collar shirt with black tailored trousers",
+                "Midnight blue double-breasted suit with pale blue shirt",
+            ],
+            "Party": [
+                "Black slim-fit satin shirt with tailored dark trousers",
+                "Deep teal turtle-neck with charcoal slim trousers + suede shoes",
+                "Printed short-sleeve resort shirt with straight-cut black pants",
+                "Maroon velvet blazer over black tee + slim black dress trousers",
+            ],
+        },
+        "Round": {
+            "Casual": [
+                "V-neck tee in solid dark colour with vertical-stripe slim jeans",
+                "Dark monochrome co-ord — navy top and matching slim trousers",
+                "Long vertical-stripe overshirt over white tee + slim dark trousers",
+                "Deep-V henley in charcoal with tapered black joggers",
+            ],
+            "Formal": [
+                "Peaked-lapel single-breasted slim suit in charcoal or deep navy",
+                "Pinstripe slim blazer with dark tailored trousers",
+                "Long structured overcoat over slim black formal trousers",
+                "Single-button tuxedo with deep-V lapels",
+            ],
+            "Party": [
+                "Monochrome all-black slim-fit ensemble with matte finish",
+                "Deep V-neck open-collar shirt in dark jewel tone + pressed trousers",
+                "Asymmetric longline jacket over black tee + slim dark jeans",
+                "Dark navy double-breasted statement jacket with slim trousers",
+            ],
+        },
+        "Square": {
+            "Casual": [
+                "Soft rounded-collar linen shirt in pastel tone + relaxed chinos",
+                "Shawl-collar knit sweater in sage or camel over slim trousers",
+                "Relaxed-fit crew-neck tee with curved hem + tapered joggers",
+                "Soft cotton henley in warm neutral + relaxed-fit jeans",
+            ],
+            "Formal": [
+                "Rounded notch-lapel unstructured blazer in medium grey + slim trousers",
+                "Soft-shoulder single-button linen suit in warm beige",
+                "Boat-neck wide-collar fitted shirt in white + tailored trousers",
+                "Single-button slim blazer in camel or sage + slim formal trousers",
+            ],
+            "Party": [
+                "Open-collar soft-fabric shirt in rich jewel tone + dark trousers",
+                "Draped blazer with curved lapels over black tee + slim trousers",
+                "Flowy printed open-collar shirt + straight-cut midnight blue trousers",
+                "Curved-hem satin shirt in deep teal or burgundy + slim trousers",
+            ],
+        },
+        "Oblong": {
+            "Casual": [
+                "Bold horizontal-stripe tee (adds width) with wide-leg dark jeans",
+                "Colour-block sweatshirt in contrasting panels + straight-cut trousers",
+                "Puffer vest over contrast-colour crewneck sweatshirt",
+                "Wide-collar rugby shirt in warm tone + straight-leg chinos",
+            ],
+            "Formal": [
+                "Double-breasted suit with wide lapels — adds visual width",
+                "Bold plaid or check blazer with straight-cut formal trousers",
+                "Cropped jacket at hip level with high-waist wide trousers",
+                "Horizontal-texture tweed blazer + straight-leg formal trousers",
+            ],
+            "Party": [
+                "Statement wide-print shirt + relaxed straight trousers",
+                "Layered jacket look — vest under blazer for added structure",
+                "Bold colour-blocked co-ord suit in contrasting tones",
+                "Wide-lapel textured dinner jacket + straight trousers",
+            ],
+        },
+        "Heart": {
+            "Casual": [
+                "Relaxed straight-leg jeans with fitted slim tee — balances forehead",
+                "Wide-leg trousers with fitted crew-neck tee — adds lower volume",
+                "Jogger pants in warm tone + fitted crewneck sweater",
+                "Bootcut or wide-leg jeans with plain fitted tee in dark tone",
+            ],
+            "Formal": [
+                "Wide-leg pleated formal trousers with slim single-button blazer",
+                "Bootcut formal trousers with structured narrow-shoulder jacket",
+                "A-line-cut suit trousers with slim-lapel blazer",
+                "Double-breasted slim blazer with straight wide trousers",
+            ],
+            "Party": [
+                "Flared or wide-leg trousers with fitted dark slim top",
+                "Wide-leg statement trousers + minimal fitted button-up shirt",
+                "Bootcut dress trousers in jewel tone + fitted dark jacket",
+                "Straight wide trousers + open-collar fitted shirt in rich colour",
+            ],
+        },
+    },
+    "Female": {
+        "Oval": {
+            "Casual": [
+                "Flowy midi wrap dress in solid jewel tone with strappy sandals",
+                "High-waist straight jeans + tucked-in fitted tee + white sneakers",
+                "A-line cotton skirt in pastel + fitted tank top + denim jacket",
+                "Wide-leg linen trousers with breezy fitted blouse",
+            ],
+            "Formal": [
+                "Tailored pencil skirt suit in classic navy or charcoal + nude pumps",
+                "Fitted sheath dress in jewel tone + structured blazer",
+                "Wrap dress in deep jewel tone + pointed-toe block heels",
+                "Wide-leg tailored trousers + high-neck blouse + structured tote",
+            ],
+            "Party": [
+                "Off-shoulder midi dress in rich velvet with metallic heels",
+                "Sequin midi skirt + fitted silk blouse + strappy heels",
+                "Halter-neck wrap dress in deep jewel tone + drop earrings",
+                "Fitted satin jumpsuit + statement belt + stilettos",
+            ],
+        },
+        "Round": {
+            "Casual": [
+                "V-neck wrap dress that cinches at the waist — elongates silhouette",
+                "High-waist straight-leg jeans + V-neck fitted top tucked in",
+                "A-line midi skirt + slim-fit tucked shirt in dark vertical print",
+                "Vertical-stripe maxi dress in single dark tone",
+            ],
+            "Formal": [
+                "V-neck wrap sheath dress in dark solid colour + nude pumps",
+                "Pinstripe A-line skirt + fitted V-neck blazer",
+                "Longline single-button blazer + slim tailored trousers",
+                "Pointed-hem asymmetric blouse + straight-leg formal trousers",
+            ],
+            "Party": [
+                "Plunging V-neck floor-length gown in deep jewel tone",
+                "Wrap midi dress + metallic belt + heeled boots",
+                "Asymmetric-hem cocktail dress in single dark colour",
+                "Monochrome dark ensemble with vertical panelling",
+            ],
+        },
+        "Square": {
+            "Casual": [
+                "Off-shoulder floral top with flared jeans to soften the jaw",
+                "Scoop-neck fitted midi dress with ruffled hemline",
+                "Soft-knit round-neck sweater + flowy A-line skirt",
+                "Flutter-sleeve blouse + wide-leg trousers in warm neutral",
+            ],
+            "Formal": [
+                "Cowl-neck silk blouse + wide-leg tailored trousers",
+                "Rounded-neckline sheath dress with curved seam detail",
+                "Soft peplum jacket over straight skirt",
+                "Scoop-neck wrapped blazer + flared-hem formal trousers",
+            ],
+            "Party": [
+                "Draped off-shoulder gown with soft ruffled skirt detail",
+                "One-shoulder dress with asymmetric flared skirt",
+                "Cowl-neck satin slip dress with soft draping",
+                "Ruffle-hem cocktail dress in bold jewel tone",
+            ],
+        },
+        "Oblong": {
+            "Casual": [
+                "Cropped top with high-waist wide-leg jeans — adds horizontal volume",
+                "Boat-neck or off-shoulder top + straight-leg dark jeans",
+                "Tiered ruffled midi skirt + tucked-in fitted blouse",
+                "Bold horizontal-print wrap dress",
+            ],
+            "Formal": [
+                "Peplum blazer + tailored straight-leg trousers",
+                "Belted wrap dress with ruffled or tiered hemline",
+                "Cropped structured jacket + wide-leg high-waist formal trousers",
+                "Off-shoulder power blazer + wide-leg trousers",
+            ],
+            "Party": [
+                "Tiered tulle ball skirt + fitted strapless top",
+                "Voluminous off-shoulder evening gown with wide skirt",
+                "Dramatic ruffled dress with bold horizontal detail",
+                "Wide-leg sequin-trim jumpsuit + off-shoulder top",
+            ],
+        },
+        "Heart": {
+            "Casual": [
+                "Wide-leg jeans + cropped fitted top — balances forehead to hip",
+                "A-line midi skirt + fitted scoop-neck top",
+                "Flared trousers + slim-fit blouse + V-neck to draw eye down",
+                "Bootcut jeans + relaxed tee, minimal shoulder detail",
+            ],
+            "Formal": [
+                "A-line dress with V-neckline + flared skirt — classic balance",
+                "Wide-leg trouser suit with slim lapels",
+                "Fit-and-flare dress with subtle off-shoulder neckline",
+                "Pleated wide-leg trousers + slim turtleneck + pointed heels",
+            ],
+            "Party": [
+                "Strapless corset top + full ball skirt — perfect hourglass",
+                "Sequin A-line dress with wide flared skirt",
+                "Off-shoulder fitted top + voluminous ruffle midi skirt",
+                "One-shoulder gown with tiered flared skirt in jewel tone",
+            ],
+        },
+    },
+}
+
+_NEUTRAL_MAP: dict[str, dict[str, list[str]]] = {
+    "Oval":   {"Casual": ["Fitted crew-neck with slim jeans"],"Formal": ["Classic tailored suit"],"Party": ["Velvet blazer in jewel tone"]},
+    "Round":  {"Casual": ["Dark monochrome V-neck ensemble"],"Formal": ["Peaked-lapel slim suit"],"Party": ["All-dark monochrome look"]},
+    "Square": {"Casual": ["Rounded-collar soft-fabric top + relaxed trousers"],"Formal": ["Unstructured blazer"],"Party": ["Draped blazer + curved lapels"]},
+    "Oblong": {"Casual": ["Horizontal-stripe top + wide jeans"],"Formal": ["Double-breasted wide-lapel suit"],"Party": ["Bold print + wide trousers"]},
+    "Heart":  {"Casual": ["Wide-leg trousers + fitted top"],"Formal": ["Wide-leg pleated trousers + slim blazer"],"Party": ["Flared bottom + fitted shirt"]},
+}
+
+SKIN_TONE_TIPS: dict[str, list[str]] = {
+    "Very Light": [
+        "Avoid neon colours — opt for pastels and muted tones.",
+        "Navy and forest green add depth without overwhelming fair skin.",
+        "Jewel tones like sapphire and emerald pop beautifully.",
+    ],
+    "Light": [
+        "Earthy tones and dusty rose are especially flattering.",
+        "Avoid stark white — opt for off-white or cream.",
+        "Cool blues and soft lilacs work beautifully as neutrals.",
+    ],
+    "Medium": [
+        "Both bold jewel tones and earthy neutrals work exceptionally well.",
+        "Warm terracotta and olive enhance your skin with natural harmony.",
+        "Contrast is your friend — avoid shades too close to your skin.",
+    ],
+    "Tan": [
+        "Rich, saturated jewel tones like cobalt and emerald shine on you.",
+        "White and bright colours create striking high-contrast impact.",
+        "Warm rust and burnt orange feel harmonious and rich.",
+    ],
+    "Brown": [
+        "Vibrant colours — fuchsia, turquoise, bright yellow — look stunning.",
+        "Off-white and cream are more flattering than stark white.",
+        "Deep jewel tones (emerald, sapphire, amethyst) add elegance.",
+    ],
+    "Dark": [
+        "Bright, bold colours create beautiful high-contrast impact — own them.",
+        "Pastels in larger quantities create a soft, chic, sophisticated look.",
+        "Metallics — gold, silver, bronze — are powerful style allies.",
+    ],
+}
+
+
+def get_color_recommendations(undertone: str, occasion: str) -> list[str]:
+    tone_map = UNDERTONE_COLOR_MAP.get(undertone, UNDERTONE_COLOR_MAP["Neutral"])
+    return tone_map.get(occasion, tone_map.get("Casual", []))
+
+
+def get_gender_outfit_recommendations(gender: str, face_shape: str, occasion: str) -> list[str]:
+    if gender in GENDER_OUTFIT_MAP:
+        g = GENDER_OUTFIT_MAP[gender]
+        s = g.get(face_shape, g.get("Oval", {}))
+        return s.get(occasion, s.get("Casual", []))
+    s = _NEUTRAL_MAP.get(face_shape, _NEUTRAL_MAP["Oval"])
+    return s.get(occasion, s.get("Casual", []))
+
+
+def get_outfit_recommendations(face_shape: str, occasion: str) -> list[str]:
+    return get_gender_outfit_recommendations("Unknown", face_shape, occasion)
+
+
+def get_style_tips(skin_tone: str) -> list[str]:
+    return SKIN_TONE_TIPS.get(skin_tone, [])
