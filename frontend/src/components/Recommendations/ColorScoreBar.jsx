@@ -13,15 +13,15 @@ export default function ColorScoreBar({ colorName, score }) {
   const style = scoreStyle(pct);
 
   return (
-    <div className="group flex items-center gap-3">
+    <div className="group flex items-center gap-2.5">
       {/* Colour dot */}
       <span className={`w-2.5 h-2.5 rounded-full flex-shrink-0 ${style.dot}`} />
 
       {/* Name */}
-      <span className="text-sm text-slate-300 w-28 truncate flex-shrink-0">{colorName}</span>
+      <span className="text-sm text-slate-700 font-semibold w-20 sm:w-24 truncate flex-shrink-0">{colorName}</span>
 
       {/* Bar */}
-      <div className="flex-1 bg-white/8 rounded-full h-2.5 overflow-hidden relative">
+      <div className="flex-1 bg-slate-900/10 rounded-full h-2.5 overflow-hidden relative min-w-[30px]">
         <div
           className={`h-full rounded-full bg-gradient-to-r ${style.gradient} shadow ${style.glow} bar-fill`}
           style={{ width: `${pct}%` }}
@@ -29,11 +29,11 @@ export default function ColorScoreBar({ colorName, score }) {
       </div>
 
       {/* Numeric + label */}
-      <div className="flex items-center gap-1.5 w-28 flex-shrink-0">
+      <div className="flex items-center gap-1.5 justify-end w-14 sm:w-24 flex-shrink-0 text-right">
         <span className={`text-xs font-bold bg-gradient-to-r ${style.gradient} bg-clip-text text-transparent`}>
           {pct}%
         </span>
-        <span className="text-[10px] text-slate-600 hidden sm:inline">{style.label}</span>
+        <span className="text-[10px] text-slate-500 hidden sm:inline">{style.label}</span>
       </div>
     </div>
   );
