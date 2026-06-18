@@ -1,6 +1,7 @@
 import axios from 'axios'
 
-const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://huely.onrender.com'
+// Backend URL — always points to the Render deployment
+const BASE_URL = 'https://huely.onrender.com'
 
 const client = axios.create({
   baseURL: BASE_URL,
