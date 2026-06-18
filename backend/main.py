@@ -11,13 +11,10 @@ import sys
 import os
 
 _HERE = os.path.dirname(os.path.abspath(__file__))
-_ROOT = os.path.dirname(_HERE)
 
-# backend/ itself must be on sys.path so `app` package is importable
-# Project root must be on sys.path so `ml` package is importable
-for _p in (_HERE, _ROOT):
-    if _p not in sys.path:
-        sys.path.insert(0, _p)
+# backend/ itself must be on sys.path so `app` and `ml` packages are importable
+if _HERE not in sys.path:
+    sys.path.insert(0, _HERE)
 
 from contextlib import asynccontextmanager
 
